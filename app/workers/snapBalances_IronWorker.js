@@ -44,7 +44,7 @@ if (process.env[ENCRYPTION_KEY] == undefined || !process.env[ENCRYPTION_KEY].len
     var db = mongoose.connect(config.db);
 
     // Bootstrap models
-    var models_path = path.join(__dirname, './models');
+    var models_path = path.join(__dirname, './app/models');
     var walk = function(path) {
         fs.readdirSync(path).forEach(function(file) {
             var newPath = path + '/' + file;
