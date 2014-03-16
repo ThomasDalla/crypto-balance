@@ -1,14 +1,12 @@
-<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
-    <span>{{article.created | date:'medium'}}</span>/
-    <span>{{article.user.name}}</span>
-    <h2>{{article.title}}</h2>
-    <div data-ng-show="global.user._id == article.user._id">
-        <a class="btn" href="/#!/articles/{{article._id}}/edit">
+<section data-ng-controller="CryptoSitesController" data-ng-init="findOne()">
+    <h2>{{cryptosite.title}}</h2>
+    <div>
+        <a class="btn" href="/#!/cryptosites/{{cryptosite._id}}/edit">
         	<i class="icon-edit"></i>
         </a> 
         <a class="btn" data-ng-click="remove();">
             <i class="icon-trash"></i>
         </a>
     </div>
-    <div>{{article.content}}</div>
+    <div>{{cryptosite.title}} ({{cryptosite.type}})</div>
 </section>

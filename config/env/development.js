@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-    db: "mongodb://localhost/mean-dev",
+    db: "mongodb://localhost/balances-dev",
     app: {
-        name: "MEAN - A Modern Stack - Development"
+        name: "C-Balances - Dev"
     },
     facebook: {
         clientID: "APP_ID",
@@ -24,5 +24,6 @@ module.exports = {
         clientID: "APP_ID",
         clientSecret: "APP_SECRET",
         callbackURL: "http://localhost:3000/auth/google/callback"
-    }
+    },
+    secret: 'this_is_a_test'
 }

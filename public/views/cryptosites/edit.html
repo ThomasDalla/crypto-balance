@@ -1,25 +1,64 @@
-<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+<section data-ng-controller="CryptoSitesController" data-ng-init="findOne()">
 	<form class="form-horizontal" data-ng-submit="update()">
 		<div class="control-group">
 			<label class="control-label" for="title">Title</label>
 
 			<div class="controls">
-				<input type="text" data-ng-model="article.title" id="title" placeholder="Title" required>
+				<input type="text" data-ng-model="cryptosite.title" id="title" placeholder="Title" required>
 				</input>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="content">Content</label>
+			<label class="control-label" for="type">Type</label>
 
 			<div class="controls">
-				<textarea data-ng-model="article.content" id="content" cols="30" rows="10" placeholder="Content">
-				</textarea>
+                <select data-ng-model="cryptosite.type" data-ng-options="s for s in cryptosite_types" id="type" required></select>
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label" for="type">Enabled?</label>
+
 			<div class="controls">
-				<input type="submit" class="btn">
+                <input type="checkbox" data-ng-model="cryptosite.enabled">
 			</div>
 		</div>
-	</form>
+		<div class="control-group">
+			<label class="control-label" for="type">API Key</label>
+
+			<div class="controls">
+                <input type="checkbox" data-ng-model="cryptosite.apiKey.required"> Required
+                <input type="checkbox" data-ng-model="cryptosite.apiKey.encrypt"> Encrypt
+                <input type="text" data-ng-model="cryptosite.apiKey.text">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">API Secret</label>
+
+			<div class="controls">
+                <input type="checkbox" data-ng-model="cryptosite.apiSecret.required"> Required
+                <input type="checkbox" data-ng-model="cryptosite.apiSecret.encrypt"> Encrypt
+                <input type="text" data-ng-model="cryptosite.apiSecret.text">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">API Account</label>
+
+			<div class="controls">
+                <input type="checkbox" data-ng-model="cryptosite.apiAccount.required"> Required
+                <input type="checkbox" data-ng-model="cryptosite.apiAccount.encrypt"> Encrypt
+                <input type="text" data-ng-model="cryptosite.apiAccount.text">
+			</div>
+		</div>
+        <div class="control-group">
+            <label class="control-label" for="cryptosite.help">Help</label>
+
+            <div class="controls">
+                <textarea data-ng-model="cryptosite.help" id="cryptosite.help" placeholder="Help"></textarea>
+            </div>
+
+            <div class="controls">
+                <input type="submit" class="btn">
+            </div>
+        </div>
+    </form>
 </section>

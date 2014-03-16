@@ -1,12 +1,60 @@
-<section data-ng-controller="UserAccountsController" data-ng-init="findOne()">
-    <h2>{{useraccount.title}}</h2>
-    <div>
-        <a class="btn" href="/#!/useraccounts/{{useraccount._id}}/edit">
-            <i class="icon-edit"></i>
-        </a>
-        <a class="btn" data-ng-click="remove();">
-            <i class="icon-trash"></i>
-        </a>
+<section data-ng-controller="BalanceSnapshotsController" data-ng-init="findOne()">
+    <a href="javascript:history.back();">Back</a><br />
+    <div ng-show="balancesnapshot.balance_errors.length>0" class="red error" style="text-align: center;">
+        <b><u>Errors:</u></b>
+        <ul data-ng-repeat="error in balancesnapshot.balance_errors">
+            <li>{{error.message}}</li>
+        </ul>
     </div>
-    <div>{{useraccount.title}} ({{useraccount.apiKey}})</div>
+    <div style="float: left;">
+    <table cellpadding="5" style="text-align: right;">
+        <thead>
+        <tr style="text-align: center;">
+            <td><b>CCY</b></td>
+            <td><b>Amount</b></td>
+            <td><b>BTC Equivalent</b></td>
+            <td><b>USD Equivalent</b></td>
+            <td><b>From</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="balance in balancesnapshot.balances">
+            <td>{{balance.currency}}</td>
+            <td>{{balance.amount | number:'2'}}</td>
+            <td>{{balance.btc_equivalent | number:'2'}}</td>
+            <td>{{balance.usd_equivalent | number:'0'}}</td>
+            <td style="text-align: center;"><span ng-repeat="detail in balance.details">
+                {{detail.account}} ({{detail.amount | number: '0'}})&nbsp;&nbsp;
+            </span> </td>
+        </tr>
+        <tfoot>
+        <tr>
+            <td colspan="2"></td>
+            <td><b>{{balancesnapshot.summary.BTC.amount | number:'2'}}</b></td>
+            <td><b>{{balancesnapshot.summary.USD.amount | number:'0'}}</b></td>
+            <td></td>
+        </tr>
+        </tfoot>
+        </tbody>
+    </table>
+        </div>
+<div style="float: right;">
+
+    <table cellpadding="5" style="text-align: right;">
+        <thead>
+        <tr>
+            <td><b>From</b></td>
+            <td><b>To</b></td>
+            <td><b>Rate</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="rate in balancesnapshot.rates">
+            <td>{{rate.currency_from}}</td>
+            <td>{{rate.currency_to}}</td>
+            <td>{{rate.value | number:'6'}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </section>

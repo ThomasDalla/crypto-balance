@@ -20,11 +20,10 @@ var crypto = require('crypto');
 var querystring = require('querystring');
 var util = require('util');
 
-//var proxy = "http://dallagt:Papa2014@tokbp00001.fm.rbsgrp.net:8080";
-request = request.defaults({
-    'proxy': 'http://dallagt:Papa2014@tokbp00001.fm.rbsgrp.net:8080',
-    'https-proxy': 'http://dallagt:Papa2014@tokbp00001.fm.rbsgrp.net:8080'
-});
+//request = request.defaults({
+//    'proxy': 'http://user:pass@host:port',
+//    'https-proxy': 'http://user:pass@host:port'
+//});
 
 module.exports = BTCE;
 
@@ -212,17 +211,17 @@ BTCE.prototype.query = function(method, params, callback) {
     .update(new Buffer(qsContent, 'utf8'))
     .digest('hex');
 
-  var options = url.parse(this.urlPost);
-  options.method = 'POST';
-  options.headers = {
-    'Key': this.key,
-    'Sign': sign,
-    'content-type': 'application/x-www-form-urlencoded',
-    'content-length': content.length
-  };
-    options.data = content;
-    options.post_data = content;
-    options.uri = this.urlPost + "/" + method + "?" + content;
+//  var options = url.parse(this.urlPost);
+//  options.method = 'POST';
+//  options.headers = {
+//    'Key': this.key,
+//    'Sign': sign,
+//    'content-type': 'application/x-www-form-urlencoded',
+//    'content-length': content.length
+//  };
+//    options.data = content;
+//    options.post_data = content;
+//    options.uri = this.urlPost + "/" + method + "?" + content;
 
     request({
         method: 'POST',
@@ -232,7 +231,10 @@ BTCE.prototype.query = function(method, params, callback) {
             'Sign': sign,
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        form: content
+        form: content,
+        rejectUnauthorized: false,
+        requestCert: true,
+        agent: false
     }, function(err, res, body) {
         if (err){
             BTCE.responseHandler(err, null, callback)
@@ -254,6 +256,9 @@ BTCE.prototype.getHTTPS = function(getUrl, callback) {
   var options = url.parse(getUrl);
   options.method = 'GET';
     options.uri = getUrl;
+    options.rejectUnauthorized = false;
+    options.requestCert= true;
+    options.agent= false;
 
     request(options, function(err, res, body) {
       if (err){

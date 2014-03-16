@@ -1,0 +1,37 @@
+<section data-ng-controller="BalancesController" data-ng-init="find()">
+    <div ng-show="balances.balance_errors.length>0" class="red error">
+        <ul data-ng-repeat="error in balances.balance_errors">
+            <li>{{error.message}}</li>
+        </ul>
+    </div>
+    <table cellpadding="10" style="text-align: right;">
+        <thead>
+        <tr>
+            <td><b>CCY</b></td>
+            <td><b>Amount</b></td>
+            <td><b>BTC Equivalent</b></td>
+            <td><b>USD Equivalent</b></td>
+            <td><b>From</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="balance in balances.balances">
+            <td>{{balance.currency}}</td>
+            <td>{{balance.amount | number:'2'}}</td>
+            <td>{{balance.btc_equivalent | number:'2'}}</td>
+            <td>{{balance.usd_equivalent | number:'0'}}</td>
+            <td><div ng-repeat="detail in balance.details">
+                {{detail.account}} ({{detail.amount | number: '0'}})
+            </div> </td>
+        </tr>
+        <tfoot>
+        <tr>
+            <td colspan="2"></td>
+            <td><b>{{balances.summary.BTC.amount | number:'2'}}</b></td>
+            <td><b>{{balances.summary.USD.amount | number:'0'}}</b></td>
+            <td></td>
+        </tr>
+        </tfoot>
+        </tbody>
+    </table>
+</section>

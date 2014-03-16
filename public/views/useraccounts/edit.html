@@ -1,31 +1,60 @@
-<section data-ng-controller="CryptoSitesController" data-ng-init="findOne()">
-	<form class="form-horizontal" data-ng-submit="update()">
-		<div class="control-group">
-			<label class="control-label" for="title">Title</label>
+<section data-ng-controller="UserAccountsController" data-ng-init="findOne()">
+    <a href="javascript:history.back();">Back</a>
+    <form class="form-horizontal" data-ng-submit="update()">
+        <div class="control-group">
+            <label class="control-label" for="title">Title</label>
 
-			<div class="controls">
-				<input type="text" data-ng-model="cryptosite.title" id="title" placeholder="Title" required>
-				</input>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="type">Type</label>
+            <div class="controls">
+                <input type="text" data-ng-model="useraccount.title" id="title" placeholder="Title" required>
+                </input>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="enabled">Enabled?</label>
 
-			<div class="controls">
-                <select data-ng-model="cryptosite.type" data-ng-options="s for s in cryptosite_types" id="type" required></select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="type">Enabled?</label>
+            <div class="controls">
+                <input type="checkbox" data-ng-model="useraccount.enabled" id="enabled">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Site</label>
 
-			<div class="controls">
-                <input type="checkbox" data-ng-model="cryptosite.enabled">
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" class="btn">
-			</div>
-		</div>
-	</form>
+            <div class="controls">
+                {{useraccount.cryptosite.title}}
+            </div>
+        </div>
+        <div class="control-group" ng-show="useraccount.cryptosite.apiKey.required">
+            <label class="control-label" for="apiKey">{{useraccount.cryptosite.apiKey.text}}</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="useraccount.apiKey" id="apiKey" placeholder="{{useraccount.cryptosite.apiKey.encrypt?'Keep blank not to change it':useraccount.cryptosite.apiKey.text}}">
+                </input>
+            </div>
+        </div>
+        <div class="control-group" ng-show="useraccount.cryptosite.apiSecret.required">
+            <label class="control-label" for="apiSecret">{{useraccount.cryptosite.apiSecret.text}}</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="useraccount.apiSecret" id="apiSecret" placeholder="{{useraccount.cryptosite.apiSecret.encrypt?'Keep blank not to change it':useraccount.cryptosite.apiSecret.text}}">
+                </input>
+            </div>
+        </div>
+        <div class="control-group" ng-show="useraccount.cryptosite.apiAccount.required">
+            <label class="control-label" for="apiAccount">{{useraccount.cryptosite.apiAccount.text}}</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="useraccount.apiAccount" id="apiAccount" placeholder="{{useraccount.cryptosite.apiAccount.encrypt?'Keep blank not to change it':useraccount.cryptosite.apiAccount.text}}">
+                </input>
+            </div>
+        </div>
+        <div class="control-group">
+            <div btf-markdown="useraccount.cryptosite.help" ng-if="useraccount!==undefined"></div>
+        </div>
+        <div class="control-group">
+            <div class="text-error">{{error.message||""}}</div>
+            <div class="controls">
+                <input type="submit" class="btn">
+            </div>
+        </div>
+    </form>
 </section>

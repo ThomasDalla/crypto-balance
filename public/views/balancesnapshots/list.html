@@ -1,29 +1,33 @@
-<section data-ng-controller="UserAccountsController" data-ng-init="find()">
-        <table cellpadding="10">
+<section data-ng-controller="BalanceSnapshotsController" data-ng-init="find()">
+        <table cellpadding="3" style="text-align: right;">
             <thead>
-            <tr>
-                <td><b>Title</b></td>
-                <td><b>Enabled</b></td>
-                <td><b>Site</b></td>
-                <td><b>API Key</b></td>
-                <!--td><b>API Secret</b></td-->
-                <td><b>API Account</b></td>
+            <tr style="text-align: center;">
+                <td><b>Time</b></td>
+                <td><b>Errors</b></td>
+                <td ng-repeat="currency in balancesnapshots.currencies">
+                    <b>{{currency}}</b>
+                </td>
+                <td><b>BTC Total</b></td>
+                <td><b>BTCUSD</b></td>
+                <td><b>USD Total</b></td>
                 <td colspan="2"></td>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="useraccount in useraccounts">
-                <td><a data-ng-href="#!/useraccounts/{{useraccount._id}}">{{useraccount.title}}</a></td>
-                <td>{{useraccount.enabled}}</td>
-                <td>{{useraccount.cryptosite.title}}</td>
-                <td>{{useraccount.apiKey}}</td>
-                <!--td>{{useraccount.apiSecret}}</td-->
-                <td>{{useraccount.apiAccount}}</td>
-                <td>        <a class="btn" href="/#!/useraccounts/{{useraccount._id}}/edit">
-                    <i class="icon-edit"></i>
-                </a> </td>
+            <tr data-ng-repeat="balancesnapshot in balancesnapshots">
+                <td>{{balancesnapshot.timestamp | date: 'dd-MMM-yyyy HH:mm:ss'}}</td>
+                <td>{{balancesnapshot.balance_errors.length}}</td>
+
+                <td ng-repeat="currency in balancesnapshots.currencies">
+                    {{balancesnapshot.balance[currency] | number: '2'}}
+                </td>
+
+                <td>{{balancesnapshot.summary.BTC.amount | number: '2'}}</td>
+                <td>{{balancesnapshot.ratesObj['BTCUSD'] | number: '0'}}</td>
+                <td>{{balancesnapshot.summary.USD.amount | number: '0'}}</td>
+                <td><a data-ng-href="#!/balancesnapshots/{{balancesnapshot._id}}">View Report</a></td>
                 <td>
-                    <a class="btn" data-ng-click="remove(useraccount);">
+                    <a class="btn" data-ng-click="remove(balancesnapshot);">
                         <i class="icon-trash"></i>
                     </a>
                 </td>
@@ -31,8 +35,13 @@
             </tbody>
         </table>
 
-    <a class="btn" href="/#!/useraccounts/create">
+    <!--a class="btn" ng-click="generateSnapshot();" ng-disabled="generatingSnapshot">
         <i class="icon-plus-sign"></i>
-    </a>
-	<h1 data-ng-hide="!useraccounts || useraccounts.length">No account setup yet. <br> Why don't you <a href="/#!/useraccounts/create">Create One</a>?</h1>
+    </a-->
+
+    <div ng-show="generatingSnapshot">
+        <img src="img/icons/loading_large_icon.gif" />
+    </div>
+
+
 </section>

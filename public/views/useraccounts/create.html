@@ -1,28 +1,62 @@
-<section data-ng-controller="CryptoSitesController">
+<section data-ng-controller="UserAccountsController">
 	<form class="form-horizontal" data-ng-submit="create()">
-		<div class="control-group">
-			<label class="control-label" for="title">Title</label>
-			<div class="controls">
-				<input type="text" data-ng-model="title" id="title" placeholder="Title" required>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="type">Type</label>
-			<div class="controls">
-                <select data-ng-model="type" data-ng-options="s for s in cryptosite_types" id="type" required></select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="type">Enabled?</label>
-			<div class="controls">
-                <input type="checkbox" data-ng-model="enabled">
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-                <div class="text-error">{{error.message||""}}</div>
-				<input type="submit" class="btn">
-			</div>
-		</div>
+        <div class="control-group">
+            <label class="control-label" for="title">Title</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="title" id="title" placeholder="Title" required>
+                </input>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="enabled">Enabled?</label>
+
+            <div class="controls">
+                <input type="checkbox" data-ng-model="enabled" id="enabled">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="cryptosite">Site</label>
+
+            <div class="controls">
+                <select data-ng-model="cryptosite" data-ng-options="s.title for s in available_cryptosites" id="cryptosite" required></select>
+            </div>
+        </div>
+        <div class="control-group" ng-show="cryptosite.apiKey.required">
+            <label class="control-label" for="apiKey">{{cryptosite.apiKey.text}}</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="apiKey" id="apiKey" placeholder="{{cryptosite.apiKey.text}}" required>
+                <span ng-show="cryptosite.apiKey.encrypt">(will be encrypted)</span>
+                </input>
+            </div>
+        </div>
+        <div class="control-group" ng-show="cryptosite.apiSecret.required">
+            <label class="control-label" for="apiSecret">{{cryptosite.apiSecret.text}}</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="apiSecret" id="apiSecret" placeholder="{{cryptosite.apiSecret.text}}">
+                <span ng-show="cryptosite.apiSecret.encrypt">(will be encrypted)</span>
+                </input><br />
+            </div>
+        </div>
+        <div class="control-group" ng-show="cryptosite.apiAccount.required">
+            <label class="control-label" for="apiAccount">{{cryptosite.apiAccount.text}}</label>
+
+            <div class="controls">
+                <input type="text" data-ng-model="apiAccount" id="apiAccount" placeholder="{{cryptosite.apiAccount.text}}">
+                <span ng-show="cryptosite.apiAccount.encrypt">(will be encrypted)</span>
+                </input>
+            </div>
+        </div>
+        <div class="control-group">
+            <div btf-markdown="cryptosite.help" ng-if="cryptosite!==undefined"></div>
+        </div>
+        <div class="control-group">
+            <div class="text-error">{{error.message||""}}</div>
+            <div class="controls">
+                <input type="submit" class="btn">
+            </div>
+        </div>
 	</form>
 </section>

@@ -8,9 +8,9 @@ var mongoose = require('mongoose'),
 
 
 /**
- * Error Schema
+ * BalanceError Schema
  */
-var ErrorSchema = new Schema({
+var BalanceErrorSchema = new Schema({
     message: {
         type: String,
         default: '',
@@ -29,7 +29,7 @@ var ErrorSchema = new Schema({
 /**
  * Validations
  */
-ErrorSchema.path('message').validate(function(message) {
+BalanceErrorSchema.path('message').validate(function(message) {
     return message.length;
 }, 'Message cannot be blank');
 
@@ -37,10 +37,10 @@ ErrorSchema.path('message').validate(function(message) {
 /**
  * Statics
  */
-ErrorSchema.statics.load = function(id, cb) {
+BalanceErrorSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
     }).exec(cb);
 };
 
-mongoose.model('Error', ErrorSchema);
+mongoose.model('BalanceError', BalanceErrorSchema);

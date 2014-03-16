@@ -19,6 +19,14 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
+    admin: {
+        type: Boolean,
+        default: false
+    },
+    accounts : [{
+        type: Schema.ObjectId,
+        ref: 'UserAccount'
+    }],
     hashed_password: String,
     provider: String,
     salt: String,

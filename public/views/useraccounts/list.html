@@ -1,23 +1,29 @@
-<section data-ng-controller="CryptoSitesController" data-ng-init="find()">
-        <table cellpadding="10">
+<section data-ng-controller="UserAccountsController" data-ng-init="find()">
+        <table cellpadding="3">
             <thead>
             <tr>
                 <td><b>Title</b></td>
-                <td><b>Type</b></td>
                 <td><b>Enabled</b></td>
+                <td><b>Site</b></td>
+                <td><b>API Key</b></td>
+                <td><b>API Secret</b></td>
+                <td><b>Account</b></td>
                 <td colspan="2"></td>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="cryptosite in cryptosites">
-                <td><a data-ng-href="#!/cryptosites/{{cryptosite._id}}">{{cryptosite.title}}</a></td>
-                <td>{{cryptosite.type}}</td>
-                <td>{{cryptosite.enabled}}</td>
-                <td>        <a class="btn" href="/#!/cryptosites/{{cryptosite._id}}/edit">
+            <tr data-ng-repeat="useraccount in useraccounts">
+                <td><a data-ng-href="#!/useraccounts/{{useraccount._id}}">{{useraccount.title}}</a></td>
+                <td>{{useraccount.enabled}}</td>
+                <td>{{useraccount.cryptosite.title}}</td>
+                <td>{{useraccount.cryptosite.apiKey.required?(useraccount.cryptosite.apiKey.encrypt?"encrypted":useraccount.apiKey):"not required"}}</td>
+                <td>{{useraccount.cryptosite.apiSecret.required?(useraccount.cryptosite.apiSecret.encrypt?"encrypted":useraccount.apiSecret):"not required"}}</td>
+                <td>{{useraccount.cryptosite.apiAccount.required?(useraccount.cryptosite.apiAccount.encrypt   ?"encrypted":useraccount.apiAccount):"not required"}}</td>
+                <td>        <a class="btn" href="/#!/useraccounts/{{useraccount._id}}/edit">
                     <i class="icon-edit"></i>
                 </a> </td>
                 <td>
-                    <a class="btn" data-ng-click="remove(cryptosite);">
+                    <a class="btn" data-ng-click="remove(useraccount);">
                         <i class="icon-trash"></i>
                     </a>
                 </td>
@@ -25,8 +31,8 @@
             </tbody>
         </table>
 
-    <a class="btn" href="/#!/cryptosites/create">
+    <a class="btn" href="/#!/useraccounts/create">
         <i class="icon-plus-sign"></i>
     </a>
-	<h1 data-ng-hide="!cryptosites || cryptosites.length">No Crypto-Site yet. <br> Why don't you <a href="/#!/cryptosites/create">Create One</a>?</h1>
+	<h1 data-ng-hide="!useraccounts || useraccounts.length">No account setup yet. <br> Why don't you <a href="/#!/useraccounts/create">Create One</a>?</h1>
 </section>

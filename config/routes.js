@@ -74,6 +74,44 @@ module.exports = function(app, passport, auth) {
     // Finish with setting up the articleId param
     app.param('articleId', articles.article);
 
+    // CryptoSite Routes
+    var cryptosites = require('../app/controllers/cryptosites');
+    app.get('/cryptosites', cryptosites.all);
+    app.get('/cryptosites-enabled', cryptosites.allEnabled);
+    app.post('/cryptosites', auth.requiresLogin, cryptosites.create);
+    app.get('/cryptosites/:cryptositeId', cryptosites.show);
+    app.put('/cryptosites/:cryptositeId', auth.requiresLogin, auth.cryptosite.hasAuthorization, cryptosites.update);
+    app.del('/cryptosites/:cryptositeId', auth.requiresLogin, auth.cryptosite.hasAuthorization, cryptosites.destroy);
+
+    // Finish with setting up the cryptositeId param
+    app.param('cryptositeId', cryptosites.cryptosite);
+
+    // UserAccount Routes
+    var useraccounts = require('../app/controllers/useraccounts');
+    app.get('/useraccounts', useraccounts.all);
+    app.post('/useraccounts', auth.requiresLogin, useraccounts.create);
+    app.get('/useraccounts/:useraccountId', useraccounts.show);
+    app.put('/useraccounts/:useraccountId', auth.requiresLogin, auth.useraccount.hasAuthorization, useraccounts.update);
+    app.del('/useraccounts/:useraccountId', auth.requiresLogin, auth.useraccount.hasAuthorization, useraccounts.destroy);
+
+    // Finish with setting up the articleId param
+    app.param('useraccountId', useraccounts.useraccount);
+
+    // Balances Route
+    var balances = require('../app/controllers/balances');
+    app.get('/balances', auth.requiresLogin, auth.balances.hasAuthorization, balances.all);
+
+    // BalanceSnapshots Routes
+    var balancesnapshots = require('../app/controllers/balancesnapshots');
+    app.get('/balancesnapshots', balancesnapshots.all);
+    app.post('/balancesnapshots', auth.requiresLogin, balancesnapshots.create);
+    app.get('/balancesnapshots/:balancesnapshotId', balancesnapshots.show);
+    app.put('/balancesnapshots/:balancesnapshotId', auth.requiresLogin, auth.balancesnapshot.hasAuthorization, balancesnapshots.update);
+    app.del('/balancesnapshots/:balancesnapshotId', auth.requiresLogin, auth.balancesnapshot.hasAuthorization, balancesnapshots.destroy);
+
+    // Finish with setting up the articleId param
+    app.param('balancesnapshotId', balancesnapshots.balancesnapshot);
+
     // Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);

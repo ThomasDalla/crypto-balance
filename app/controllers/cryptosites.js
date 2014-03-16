@@ -88,7 +88,22 @@ exports.show = function(req, res) {
  * List of CryptoSites
  */
 exports.all = function(req, res) {
-    CryptoSite.find().sort('-created').exec(function(err, cryptosites) {
+    CryptoSite.find().sort('title').exec(function(err, cryptosites) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(cryptosites);
+        }
+    });
+};
+
+/**
+ * List of active CryptoSites
+ */
+exports.allEnabled = function(req, res) {
+    CryptoSite.find().where('enabled').ne(false).sort('title').exec(function(err, cryptosites) {
         if (err) {
             res.render('error', {
                 status: 500

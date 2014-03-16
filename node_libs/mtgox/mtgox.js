@@ -1,8 +1,15 @@
+// Based on XXX
+
 var querystring = require("querystring"),
   crypto = require("crypto"),
   request = require("request"),
   microtime = require("microtime"),
   JSONStream = require("JSONStream");
+
+//request = request.defaults({
+//    'proxy': 'http://user:pass@host:port',
+//    'https-proxy': 'http://user:pass@host:port'
+//});
 
 function MtGoxClient(key, secret, currency) {
   var self = this;

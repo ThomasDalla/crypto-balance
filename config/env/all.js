@@ -12,5 +12,6 @@ module.exports = {
 	// is used to compute a session hash
 	sessionSecret: 'MEAN',
 	// The name of the MongoDB collection to store sessions in
-	sessionCollection: 'sessions'
-}
+	sessionCollection: 'sessions',
+    encryptionKey: 'ENCRYPTION_KEY'
+};
