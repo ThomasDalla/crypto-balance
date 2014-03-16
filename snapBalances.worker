@@ -1,0 +1,4 @@
+# define the runtime language, this can be ruby, java, node, php, go, etc.
+runtime "node"
+# exec is the file that will be executed:
+exec "app/workers/snapBalances.js"
