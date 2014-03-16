@@ -1,0 +1,38 @@
+<section data-ng-controller="UserAccountsController" data-ng-init="find()">
+        <table cellpadding="10">
+            <thead>
+            <tr>
+                <td><b>Title</b></td>
+                <td><b>Enabled</b></td>
+                <td><b>Site</b></td>
+                <td><b>API Key</b></td>
+                <!--td><b>API Secret</b></td-->
+                <td><b>API Account</b></td>
+                <td colspan="2"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="useraccount in useraccounts">
+                <td><a data-ng-href="#!/useraccounts/{{useraccount._id}}">{{useraccount.title}}</a></td>
+                <td>{{useraccount.enabled}}</td>
+                <td>{{useraccount.cryptosite.title}}</td>
+                <td>{{useraccount.apiKey}}</td>
+                <!--td>{{useraccount.apiSecret}}</td-->
+                <td>{{useraccount.apiAccount}}</td>
+                <td>        <a class="btn" href="/#!/useraccounts/{{useraccount._id}}/edit">
+                    <i class="icon-edit"></i>
+                </a> </td>
+                <td>
+                    <a class="btn" data-ng-click="remove(useraccount);">
+                        <i class="icon-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    <a class="btn" href="/#!/useraccounts/create">
+        <i class="icon-plus-sign"></i>
+    </a>
+	<h1 data-ng-hide="!useraccounts || useraccounts.length">No account setup yet. <br> Why don't you <a href="/#!/useraccounts/create">Create One</a>?</h1>
+</section>

@@ -1,0 +1,12 @@
+<section data-ng-controller="UserAccountsController" data-ng-init="findOne()">
+    <h2>{{useraccount.title}}</h2>
+    <div>
+        <a class="btn" href="/#!/useraccounts/{{useraccount._id}}/edit">
+            <i class="icon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove();">
+            <i class="icon-trash"></i>
+        </a>
+    </div>
+    <div>{{useraccount.title}} ({{useraccount.apiKey}})</div>
+</section>

@@ -1,0 +1,32 @@
+<section data-ng-controller="CryptoSitesController" data-ng-init="find()">
+        <table cellpadding="10">
+            <thead>
+            <tr>
+                <td><b>Title</b></td>
+                <td><b>Type</b></td>
+                <td><b>Enabled</b></td>
+                <td colspan="2"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="cryptosite in cryptosites">
+                <td><a data-ng-href="#!/cryptosites/{{cryptosite._id}}">{{cryptosite.title}}</a></td>
+                <td>{{cryptosite.type}}</td>
+                <td>{{cryptosite.enabled}}</td>
+                <td>        <a class="btn" href="/#!/cryptosites/{{cryptosite._id}}/edit">
+                    <i class="icon-edit"></i>
+                </a> </td>
+                <td>
+                    <a class="btn" data-ng-click="remove(cryptosite);">
+                        <i class="icon-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    <a class="btn" href="/#!/cryptosites/create">
+        <i class="icon-plus-sign"></i>
+    </a>
+	<h1 data-ng-hide="!cryptosites || cryptosites.length">No Crypto-Site yet. <br> Why don't you <a href="/#!/cryptosites/create">Create One</a>?</h1>
+</section>

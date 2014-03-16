@@ -1,0 +1,31 @@
+<section data-ng-controller="CryptoSitesController" data-ng-init="findOne()">
+	<form class="form-horizontal" data-ng-submit="update()">
+		<div class="control-group">
+			<label class="control-label" for="title">Title</label>
+
+			<div class="controls">
+				<input type="text" data-ng-model="cryptosite.title" id="title" placeholder="Title" required>
+				</input>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Type</label>
+
+			<div class="controls">
+                <select data-ng-model="cryptosite.type" data-ng-options="s for s in cryptosite_types" id="type" required></select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Enabled?</label>
+
+			<div class="controls">
+                <input type="checkbox" data-ng-model="cryptosite.enabled">
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<input type="submit" class="btn">
+			</div>
+		</div>
+	</form>
+</section>

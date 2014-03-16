@@ -1,0 +1,40 @@
+
+{
+    "name": "mtgox-apiv2",
+    "version": "1.1.3",
+    "description": "mtgox.com API v2 client for node.js",
+    "keywords": [
+        "btc",
+        "bitcoin",
+        "mtgox"
+    ],
+    "author": "Ameen Soleimani (https://github.com/ameen3)",
+    "contributors": [
+        "Preston Skupinski <skupinsk@msu.edu> (https://github.com/pskupinski)",
+        "Lars-Magnus Skog <lars.magnus.skog@gmail.com> (https://github.com/ralphtheninja)",
+        "Mike van Rossum (https://github.com/askmike)",
+        "pulsecat (https://github.com/pulsecat)",
+        "Josh Harvey (https://github.com/joshmh)",
+        "Roger Enriquez Jr (https://github.com/rnreekez)"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "querystring": "0.2.0",
+        "JSONStream": "0.6.4",
+        "request": "2.21.0",
+        "microtime": "0.4.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ameen3/node-mtgox-apiv2"
+    },
+    "main": "mtgox.js",
+    "engines": {
+        "node": "~0.10"
+    },
+    "bugs": {
+        "url": "https://github.com/ameen3/node-mtgox-apiv2/issues",
+        "email": "ameen.sol@gmail.com"
+    },
+    "readmeFilename": "README.md"
+}

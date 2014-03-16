@@ -1,0 +1,28 @@
+<section data-ng-controller="CryptoSitesController">
+	<form class="form-horizontal" data-ng-submit="create()">
+		<div class="control-group">
+			<label class="control-label" for="title">Title</label>
+			<div class="controls">
+				<input type="text" data-ng-model="title" id="title" placeholder="Title" required>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Type</label>
+			<div class="controls">
+                <select data-ng-model="type" data-ng-options="s for s in cryptosite_types" id="type" required></select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Enabled?</label>
+			<div class="controls">
+                <input type="checkbox" data-ng-model="enabled">
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+                <div class="text-error">{{error.message||""}}</div>
+				<input type="submit" class="btn">
+			</div>
+		</div>
+	</form>
+</section>
