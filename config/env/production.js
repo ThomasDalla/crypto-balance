@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    db: "mongodb://localhost/balances-prod",
+    db: process.env.MONGOHQ_URL,
     app: {
         name: "C-Balances - Production"
     },
