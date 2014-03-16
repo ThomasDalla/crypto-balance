@@ -1,4 +1,14 @@
 # define the runtime language, this can be ruby, java, node, php, go, etc.
 runtime "node"
+stack 'node-0.10'
+set_env "ENCRYPTION_KEY", "abcd"
+set_env "NODE_ENV", "production"
+set_env "MONGOHQ_URL", "mongodb://localhost/balances-dev"
+file 'package.json'
+build 'npm config set strict-ssl false; npm install'
+remote
+dir "./config"
+dir "./node_libs"
+dir "./app"
 # exec is the file that will be executed:
-exec "app/workers/snapBalances.js"
+exec "snapBalances_IronWorker.js"
