@@ -553,143 +553,144 @@ if (process.env[ENCRYPTION_KEY] == undefined || !process.env[ENCRYPTION_KEY].len
                         var currentUsername = usernames[uIt];
                         var currentUserResult = results[currentUsername];
                         var currencies = currentUserResult.currencies;
-                        var currentUser = currentUserResult.user;
-                        var allBalancesObj = currentUserResult.allBalancesObj;
-                        var allBalancesDetails = currentUserResult.allBalancesDetails;
-                        var allBalances = [];
-                        var currentErrors = [];
-                        for (var eIt in currentUserResult.errors) {
-                            currentErrors.push(currentUserResult.errors[eIt]);
-                        }
-                        for (var fxE = 0; fxE < fxErrorsCount; fxE++) {
-                            currentErrors.push(fxErrors[fxE]);
-                        }
-
-                        var totalBtc = {
-                            currency: 'BTC',
-                            from_crypto: 0,
-                            from_fiat: 0,
-                            amount: 0
-                        };
-                        var totalUsd = {
-                            currency: 'USD',
-                            from_crypto: 0,
-                            from_fiat: 0,
-                            amount: 0
-                        };
-                        for (var k = 0; k < currencies.length; k++) {
-                            var currency = currencies[k];
-                            if (INCLUDE_ZERO_VALUES || allBalancesObj[currency] > 0) {
-                                var btc_equivalent = -1.0;
-                                var usd_equivalent = -1.0;
-                                var balance = allBalancesObj[currency];
-                                var localBtcRate = 1.0;
-                                var localUsdRate = 1.0;
-                                if (btcRate[currency] != undefined) {
-                                    btc_equivalent = balance * btcRate[currency];
-                                    localBtcRate = btcRate[currency];
-                                    usd_equivalent = btc_equivalent * usdRate.BTC;
-                                    localUsdRate = btcRate[currency] * usdRate.BTC;
-                                    totalBtc.from_crypto += btc_equivalent;
-                                    totalUsd.from_crypto += usd_equivalent;
-                                }
-                                if (usdRate[currency] != undefined) {
-                                    usd_equivalent = balance * usdRate[currency];
-                                    localUsdRate = usdRate[currency];
-                                    if (currency != 'BTC' && btcRate[currency] == undefined) {
-                                        totalUsd.from_fiat += usd_equivalent;
-                                    }
-                                    if (btc_equivalent < 0) {
-                                        btc_equivalent = usd_equivalent / usdRate['BTC'];
-                                        localBtcRate = usdRate[currency] / usdRate['BTC'];
-                                        totalBtc.from_fiat += btc_equivalent;
-                                    }
-                                }
-                                totalBtc.amount += btc_equivalent;
-                                totalUsd.amount += usd_equivalent;
-                                var allBalancesDetailsCount = allBalancesDetails[currency].length;
-                                for (var abd = 0; abd < allBalancesDetailsCount; abd++) {
-                                    allBalancesDetails[currency][abd].btc_equivalent = allBalancesDetails[currency][abd].amount * localBtcRate;
-                                    allBalancesDetails[currency][abd].usd_equivalent = allBalancesDetails[currency][abd].amount * localUsdRate;
-                                }
-                                allBalances.push({
-                                    currency: currency,
-                                    amount: balance,
-                                    btc_equivalent: btc_equivalent,
-                                    usd_equivalent: usd_equivalent,
-                                    details: allBalancesDetails[currency]
-                                });
+                        if (currencies!=undefined) {
+                            var currentUser = currentUserResult.user;
+                            var allBalancesObj = currentUserResult.allBalancesObj;
+                            var allBalancesDetails = currentUserResult.allBalancesDetails;
+                            var allBalances = [];
+                            var currentErrors = [];
+                            for (var eIt in currentUserResult.errors) {
+                                currentErrors.push(currentUserResult.errors[eIt]);
                             }
-                        }
-                        // Create an array from usdRate
-                        var usdRatesCurrencies = Object.keys(usdRate);
-                        var usdRatesLength = usdRatesCurrencies.length;
-                        var usdRates = [];
-                        var allRates = [];
-                        for (var ur = 0; ur < usdRatesLength; ur++) {
-                            var ccy = usdRatesCurrencies[ur];
-                            var usdRateObj = {
-                                currency_from: ccy,
-                                currency_to: 'USD',
-                                value: usdRate[ccy]
-                            };
-                            usdRates.push(usdRateObj);
-                            allRates.push(usdRateObj);
-                        }
-                        var btcRatesCurrencies = Object.keys(btcRate);
-                        var btcRatesLength = btcRatesCurrencies.length;
-                        var btcRates = [];
-                        for (var br = 0; br < btcRatesLength; br++) {
-                            var brCcy = btcRatesCurrencies[br];
-                            var btcRateObj = {
-                                currency_from: brCcy,
-                                currency_to: 'BTC',
-                                value: btcRate[brCcy]
-                            };
-                            btcRates.push(btcRateObj);
-                            allRates.push(btcRateObj);
-                        }
-                        var snap = {
-                            balance_errors: currentErrors,
-                            balances: allBalances,
-                            rates: allRates,
-                            timestamp: now,
-                            summary: {
-                                BTC: totalBtc,
-                                USD: totalUsd
-                            },
-                            user: currentUser
-                        };
+                            for (var fxE = 0; fxE < fxErrorsCount; fxE++) {
+                                currentErrors.push(fxErrors[fxE]);
+                            }
 
-                        var balanceSnapshot = new BalanceSnapshot(snap);
-                        (function() {
-                            var localErrors = currentErrors;
-                            var localSnapshot = balanceSnapshot;
-                            var localUsername = currentUsername;
-                            saveTasks.push(function(saveTaskCallback) {
-                                localSnapshot.source = "worker";
-                                localSnapshot.save(function(err) {
-                                    if (err) {
-                                        //                                console.log(allBalances);
-                                        console.log("Error saving to the DB: " + err);
-                                        var errorO = {
-                                            message: "Error saving to the DB",
-                                            details: err
-                                        };
-                                        localErrors.push(errorO);
-                                        localSnapshot.balance_errors.push(errorO);
+                            var totalBtc = {
+                                currency: 'BTC',
+                                from_crypto: 0,
+                                from_fiat: 0,
+                                amount: 0
+                            };
+                            var totalUsd = {
+                                currency: 'USD',
+                                from_crypto: 0,
+                                from_fiat: 0,
+                                amount: 0
+                            };
+                            for (var k = 0; k < currencies.length; k++) {
+                                var currency = currencies[k];
+                                if (INCLUDE_ZERO_VALUES || allBalancesObj[currency] > 0) {
+                                    var btc_equivalent = -1.0;
+                                    var usd_equivalent = -1.0;
+                                    var balance = allBalancesObj[currency];
+                                    var localBtcRate = 1.0;
+                                    var localUsdRate = 1.0;
+                                    if (btcRate[currency] != undefined) {
+                                        btc_equivalent = balance * btcRate[currency];
+                                        localBtcRate = btcRate[currency];
+                                        usd_equivalent = btc_equivalent * usdRate.BTC;
+                                        localUsdRate = btcRate[currency] * usdRate.BTC;
+                                        totalBtc.from_crypto += btc_equivalent;
+                                        totalUsd.from_crypto += usd_equivalent;
                                     }
-                                    console.log("Snapped balances for " + localUsername);
-                                    if (localErrors.length) {
-                                        console.log("\nErrors: ");
-                                        console.log(localErrors);
+                                    if (usdRate[currency] != undefined) {
+                                        usd_equivalent = balance * usdRate[currency];
+                                        localUsdRate = usdRate[currency];
+                                        if (currency != 'BTC' && btcRate[currency] == undefined) {
+                                            totalUsd.from_fiat += usd_equivalent;
+                                        }
+                                        if (btc_equivalent < 0) {
+                                            btc_equivalent = usd_equivalent / usdRate['BTC'];
+                                            localBtcRate = usdRate[currency] / usdRate['BTC'];
+                                            totalBtc.from_fiat += btc_equivalent;
+                                        }
                                     }
-                                    console.log("Finished with user " + localUsername);
-                                    saveTaskCallback(null, localSnapshot);
+                                    totalBtc.amount += btc_equivalent;
+                                    totalUsd.amount += usd_equivalent;
+                                    var allBalancesDetailsCount = allBalancesDetails[currency].length;
+                                    for (var abd = 0; abd < allBalancesDetailsCount; abd++) {
+                                        allBalancesDetails[currency][abd].btc_equivalent = allBalancesDetails[currency][abd].amount * localBtcRate;
+                                        allBalancesDetails[currency][abd].usd_equivalent = allBalancesDetails[currency][abd].amount * localUsdRate;
+                                    }
+                                    allBalances.push({
+                                        currency: currency,
+                                        amount: balance,
+                                        btc_equivalent: btc_equivalent,
+                                        usd_equivalent: usd_equivalent,
+                                        details: allBalancesDetails[currency]
+                                    });
+                                }
+                            }
+                            // Create an array from usdRate
+                            var usdRatesCurrencies = Object.keys(usdRate);
+                            var usdRatesLength = usdRatesCurrencies.length;
+                            var usdRates = [];
+                            var allRates = [];
+                            for (var ur = 0; ur < usdRatesLength; ur++) {
+                                var ccy = usdRatesCurrencies[ur];
+                                var usdRateObj = {
+                                    currency_from: ccy,
+                                    currency_to: 'USD',
+                                    value: usdRate[ccy]
+                                };
+                                usdRates.push(usdRateObj);
+                                allRates.push(usdRateObj);
+                            }
+                            var btcRatesCurrencies = Object.keys(btcRate);
+                            var btcRatesLength = btcRatesCurrencies.length;
+                            var btcRates = [];
+                            for (var br = 0; br < btcRatesLength; br++) {
+                                var brCcy = btcRatesCurrencies[br];
+                                var btcRateObj = {
+                                    currency_from: brCcy,
+                                    currency_to: 'BTC',
+                                    value: btcRate[brCcy]
+                                };
+                                btcRates.push(btcRateObj);
+                                allRates.push(btcRateObj);
+                            }
+                            var snap = {
+                                balance_errors: currentErrors,
+                                balances: allBalances,
+                                rates: allRates,
+                                timestamp: now,
+                                summary: {
+                                    BTC: totalBtc,
+                                    USD: totalUsd
+                                },
+                                user: currentUser
+                            };
+
+                            var balanceSnapshot = new BalanceSnapshot(snap);
+                            (function() {
+                                var localErrors = currentErrors;
+                                var localSnapshot = balanceSnapshot;
+                                var localUsername = currentUsername;
+                                saveTasks.push(function(saveTaskCallback) {
+                                    localSnapshot.source = "worker";
+                                    localSnapshot.save(function(err) {
+                                        if (err) {
+                                            //                                console.log(allBalances);
+                                            console.log("Error saving to the DB: " + err);
+                                            var errorO = {
+                                                message: "Error saving to the DB",
+                                                details: err
+                                            };
+                                            localErrors.push(errorO);
+                                            localSnapshot.balance_errors.push(errorO);
+                                        }
+                                        console.log("Snapped balances for " + localUsername);
+                                        if (localErrors.length) {
+                                            console.log("\nErrors: ");
+                                            console.log(localErrors);
+                                        }
+                                        console.log("Finished with user " + localUsername);
+                                        saveTaskCallback(null, localSnapshot);
+                                    });
                                 });
-                            });
-                        })();
-
+                            })();
+                        }
                     }
 
                     console.log("Starting to save in series to the DB");
