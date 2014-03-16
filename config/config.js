@@ -2,6 +2,7 @@
 
 // Utilize Lo-Dash utility library
 var _ = require('lodash');
+console.log("Loading config for " + process.env.NODE_ENV);
 
 // Extend the base configuration in all.js with environment
 // specific configuration
