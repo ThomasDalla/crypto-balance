@@ -55,8 +55,11 @@ MEAN is a boilerplate that provides a nice starting point for [MongoDB](http://w
   * Visit us at [Linnovate.net](http://www.linnovate.net/).
   * Visit our [Ninja's Zone](http://www.meanleanstartupmachine.com/) for extended support.
 
-## Credits
+## Credits (for MEAN)
 Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
+Amos Haviv [E-Mail](mailto:mail@amoshaviv.com), [Facebook](http://www.facebook.com/amoshaviv), or [Twitter](http://www.twitter.com/amoshaviv).
+  * [Linnovate.net](http://www.linnovate.net/).
+  * [Ninja's Zone](http://www.meanleanstartupmachine.com/) for extended support.
 
 ## License
 (The MIT License)
